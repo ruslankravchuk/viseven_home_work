@@ -1,0 +1,17 @@
+div {
+  color: red; }
+
+.wrapper {
+  margin-top: 10%;
+  margin-left: 3%; }
+  .wrapper .sample {
+    padding-bottom: 10%; }
+    .wrapper .sample p {
+      font-family: "roboto"; }
+  .wrapper .btn.my_btn {
+    min-width: 18%;
+    border: 1px solid orange;
+    border-radius: 23px;
+    background-color: green;
+    outline-style: none;
+    font-family: "roboto"; }

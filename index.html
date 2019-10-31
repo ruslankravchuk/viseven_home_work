@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>    
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css"> 
+    <script src="js/vue.js"></script>     
+</head>
+<body>
+     <div class="wrapper">
+        <div class="sample">
+            <input type="text" v-bind:value="name" 
+            v-on:input= "name = $event.target.value"     >
+            <hr>
+            <h2>Hello, {{ name }}</h2>
+            <div class="some_text" v-show="show_2" >
+                <p>Lorem ipsum dolor sit amet, consectetur
+                 adipisicing elit. Harum eius ratione velit, 
+                 voluptatum?</p>
+            </div>
+            <div>
+                 <button class="btn my_btn btn-pramary"
+                     v-on:click="show_2 = !show_2"
+                     v-bind:title = "1+1">
+                       Toggle header
+                 </button>
+              </div>
+            <hr>
+            <app-progress v-bind:val="sum"
+                          v-bind:max="maxNumbers * 5">
+            </app-progress> 
+            <hr>
+            <div>
+                <button class="btn my_btn btn-pramary"
+                        v-on:click="addNumber"
+                        v-bind:disabled = "done" >  
+                        Add Number                  
+                </button>
+             </div>
+            <hr>
+            <app-progress v-bind:val="numbers.length"
+                          v-bind:max="maxNumbers">
+            </app-progress> 
+            <hr>
+            <ul class="list_group">
+                <li class="list_group_item"
+                     v-for="number in numbers">
+                   {{ number }}          
+                     </li> 
+                          
+            </ul>
+            <hr>            
+        </div>
+     </div>
+
+
+<script src="js/main.js"></script>  
+<script>
+      Vue.component('app-progress', {
+               props: {
+                   max: Number,
+                   val: Number
+               },
+               computed: {
+                   width() {
+                      let w = this.val / this.max * 100;
+                      if (w > 100) {
+                        w = 100;
+                      }
+                      else  if(w < 0)
+                        {  w = 0    }
+                      return {
+                        width: w + '%'
+                      }
+
+                   }
+               },
+               template: 
+               `
+               <div class="progress">
+                     <div class="progress-bar my_progress" v-bind:style="width" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+               </div>
+               `
+                     });
+      let sample = new Vue({
+          el: '.sample',
+          data: {
+                 showRes: true,
+                 name:    '',
+                 show_2:   false,
+                 numbers:  [], 
+                 maxNumbers: 10
+
+                    },
+          methods: {
+             addNumber() { 
+                 if (!this.done) {
+                  let rnd = Math.floor(Math.random() * 11) -5;                  
+                  this.numbers.push(rnd);
+                       }
+                }
+
+              },
+          computed: {
+                sum() {
+                       let sum = 0;
+                       for (let i = 0; i< this.numbers.length; i++){
+                        sum += this.numbers[i];
+                       }
+
+
+                },
+                bthText() {
+                    return this.show_2 ? 'Hide result' : 'Show result'
+                },
+                done() {
+                    return this.numbers.length >= this.maxNumbers;
+                }
+
+          }
+      });
+</script>
+</body>
+</html>
